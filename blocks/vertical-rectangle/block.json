@@ -6,11 +6,11 @@
 	"category": "placeholders",
 	"icon": "format-image",
 	"description": "Vertical Rectangle ad placeholder - 240×400 pixels",
-	"keywords": ["ad", "placeholder", "vertical", "rectangle", "240x400"],
+	"keywords": [ "ad", "placeholder", "vertical", "rectangle", "240x400" ],
 	"textdomain": "placeholders",
 	"supports": {
 		"html": false,
-		"align": ["wide", "full"],
+		"align": [ "wide", "full" ],
 		"color": {
 			"background": true,
 			"text": true

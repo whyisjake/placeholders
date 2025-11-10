@@ -6,11 +6,11 @@
 	"category": "placeholders",
 	"icon": "format-image",
 	"description": "Portrait ad placeholder - 300×1050 pixels",
-	"keywords": ["ad", "placeholder", "portrait", "300x1050"],
+	"keywords": [ "ad", "placeholder", "portrait", "300x1050" ],
 	"textdomain": "placeholders",
 	"supports": {
 		"html": false,
-		"align": ["wide", "full"],
+		"align": [ "wide", "full" ],
 		"color": {
 			"background": true,
 			"text": true

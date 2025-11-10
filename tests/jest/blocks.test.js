@@ -10,24 +10,48 @@ describe( 'Placeholders Block Registration', () => {
 
 	test( 'blocks.js exports expected ad sizes', () => {
 		const adSizes = {
-			'leaderboard': { width: 728, height: 90, label: 'Leaderboard' },
-			'medium-rectangle': { width: 300, height: 250, label: 'Medium Rectangle' },
-			'wide-skyscraper': { width: 160, height: 600, label: 'Wide Skyscraper' },
+			leaderboard: { width: 728, height: 90, label: 'Leaderboard' },
+			'medium-rectangle': {
+				width: 300,
+				height: 250,
+				label: 'Medium Rectangle',
+			},
+			'wide-skyscraper': {
+				width: 160,
+				height: 600,
+				label: 'Wide Skyscraper',
+			},
 			'mobile-banner': { width: 320, height: 50, label: 'Mobile Banner' },
-			'billboard': { width: 970, height: 250, label: 'Billboard' },
-			'large-rectangle': { width: 336, height: 280, label: 'Large Rectangle' },
+			billboard: { width: 970, height: 250, label: 'Billboard' },
+			'large-rectangle': {
+				width: 336,
+				height: 280,
+				label: 'Large Rectangle',
+			},
 			'half-page': { width: 300, height: 600, label: 'Half Page' },
 			'small-square': { width: 200, height: 200, label: 'Small Square' },
-			'square': { width: 250, height: 250, label: 'Square' },
-			'small-rectangle': { width: 180, height: 150, label: 'Small Rectangle' },
-			'vertical-rectangle': { width: 240, height: 400, label: 'Vertical Rectangle' },
-			'large-leaderboard': { width: 970, height: 90, label: 'Large Leaderboard' },
-			'portrait': { width: 300, height: 1050, label: 'Portrait' },
-			'netboard': { width: 580, height: 400, label: 'Netboard' },
+			square: { width: 250, height: 250, label: 'Square' },
+			'small-rectangle': {
+				width: 180,
+				height: 150,
+				label: 'Small Rectangle',
+			},
+			'vertical-rectangle': {
+				width: 240,
+				height: 400,
+				label: 'Vertical Rectangle',
+			},
+			'large-leaderboard': {
+				width: 970,
+				height: 90,
+				label: 'Large Leaderboard',
+			},
+			portrait: { width: 300, height: 1050, label: 'Portrait' },
+			netboard: { width: 580, height: 400, label: 'Netboard' },
 		};
 
 		expect( Object.keys( adSizes ) ).toHaveLength( 14 );
-		expect( adSizes['leaderboard'] ).toEqual( {
+		expect( adSizes.leaderboard ).toEqual( {
 			width: 728,
 			height: 90,
 			label: 'Leaderboard',
@@ -36,23 +60,47 @@ describe( 'Placeholders Block Registration', () => {
 
 	test( 'all ad sizes have required properties', () => {
 		const adSizes = {
-			'leaderboard': { width: 728, height: 90, label: 'Leaderboard' },
-			'medium-rectangle': { width: 300, height: 250, label: 'Medium Rectangle' },
-			'wide-skyscraper': { width: 160, height: 600, label: 'Wide Skyscraper' },
+			leaderboard: { width: 728, height: 90, label: 'Leaderboard' },
+			'medium-rectangle': {
+				width: 300,
+				height: 250,
+				label: 'Medium Rectangle',
+			},
+			'wide-skyscraper': {
+				width: 160,
+				height: 600,
+				label: 'Wide Skyscraper',
+			},
 			'mobile-banner': { width: 320, height: 50, label: 'Mobile Banner' },
-			'billboard': { width: 970, height: 250, label: 'Billboard' },
-			'large-rectangle': { width: 336, height: 280, label: 'Large Rectangle' },
+			billboard: { width: 970, height: 250, label: 'Billboard' },
+			'large-rectangle': {
+				width: 336,
+				height: 280,
+				label: 'Large Rectangle',
+			},
 			'half-page': { width: 300, height: 600, label: 'Half Page' },
 			'small-square': { width: 200, height: 200, label: 'Small Square' },
-			'square': { width: 250, height: 250, label: 'Square' },
-			'small-rectangle': { width: 180, height: 150, label: 'Small Rectangle' },
-			'vertical-rectangle': { width: 240, height: 400, label: 'Vertical Rectangle' },
-			'large-leaderboard': { width: 970, height: 90, label: 'Large Leaderboard' },
-			'portrait': { width: 300, height: 1050, label: 'Portrait' },
-			'netboard': { width: 580, height: 400, label: 'Netboard' },
+			square: { width: 250, height: 250, label: 'Square' },
+			'small-rectangle': {
+				width: 180,
+				height: 150,
+				label: 'Small Rectangle',
+			},
+			'vertical-rectangle': {
+				width: 240,
+				height: 400,
+				label: 'Vertical Rectangle',
+			},
+			'large-leaderboard': {
+				width: 970,
+				height: 90,
+				label: 'Large Leaderboard',
+			},
+			portrait: { width: 300, height: 1050, label: 'Portrait' },
+			netboard: { width: 580, height: 400, label: 'Netboard' },
 		};
 
-		Object.entries( adSizes ).forEach( ( [ slug, size ] ) => {
+		Object.entries( adSizes ).forEach( ( [ , size ] ) => {
 			expect( size ).toHaveProperty( 'width' );
 			expect( size ).toHaveProperty( 'height' );
 			expect( size ).toHaveProperty( 'label' );
@@ -64,11 +112,15 @@ describe( 'Placeholders Block Registration', () => {
 
 	test( 'ad size dimensions are positive numbers', () => {
 		const adSizes = {
-			'leaderboard': { width: 728, height: 90, label: 'Leaderboard' },
-			'medium-rectangle': { width: 300, height: 250, label: 'Medium Rectangle' },
+			leaderboard: { width: 728, height: 90, label: 'Leaderboard' },
+			'medium-rectangle': {
+				width: 300,
+				height: 250,
+				label: 'Medium Rectangle',
+			},
 		};
 
-		Object.entries( adSizes ).forEach( ( [ slug, size ] ) => {
+		Object.entries( adSizes ).forEach( ( [ , size ] ) => {
 			expect( size.width ).toBeGreaterThan( 0 );
 			expect( size.height ).toBeGreaterThan( 0 );
 		} );
@@ -76,11 +128,15 @@ describe( 'Placeholders Block Registration', () => {
 
 	test( 'ad size labels are not empty', () => {
 		const adSizes = {
-			'leaderboard': { width: 728, height: 90, label: 'Leaderboard' },
-			'medium-rectangle': { width: 300, height: 250, label: 'Medium Rectangle' },
+			leaderboard: { width: 728, height: 90, label: 'Leaderboard' },
+			'medium-rectangle': {
+				width: 300,
+				height: 250,
+				label: 'Medium Rectangle',
+			},
 		};
 
-		Object.entries( adSizes ).forEach( ( [ slug, size ] ) => {
+		Object.entries( adSizes ).forEach( ( [ , size ] ) => {
 			expect( size.label.length ).toBeGreaterThan( 0 );
 		} );
 	} );
@@ -93,7 +149,8 @@ describe( 'Block Edit Function', () => {
 				style: {
 					width: props.size.width + 'px',
 					height: props.size.height + 'px',
-					backgroundColor: props.attributes.backgroundColor || '#f0f0f0',
+					backgroundColor:
+						props.attributes.backgroundColor || '#f0f0f0',
 					color: props.attributes.textColor || '#666666',
 				},
 			};
@@ -120,7 +177,8 @@ describe( 'Block Edit Function', () => {
 		const mockEdit = ( props ) => {
 			const blockProps = {
 				style: {
-					backgroundColor: props.attributes.backgroundColor || '#f0f0f0',
+					backgroundColor:
+						props.attributes.backgroundColor || '#f0f0f0',
 					color: props.attributes.textColor || '#666666',
 				},
 			};

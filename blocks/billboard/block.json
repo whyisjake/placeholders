@@ -6,11 +6,11 @@
 	"category": "placeholders",
 	"icon": "format-image",
 	"description": "Billboard ad placeholder - 970×250 pixels",
-	"keywords": ["ad", "placeholder", "billboard", "970x250"],
+	"keywords": [ "ad", "placeholder", "billboard", "970x250" ],
 	"textdomain": "placeholders",
 	"supports": {
 		"html": false,
-		"align": ["wide", "full"],
+		"align": [ "wide", "full" ],
 		"color": {
 			"background": true,
 			"text": true

@@ -1,97 +1,97 @@
 name: Run Tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  phpunit:
-    name: PHPUnit Tests (PHP ${{ matrix.php }}, WP ${{ matrix.wordpress }})
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php: ['7.4', '8.0', '8.1', '8.2']
-        wordpress: ['latest', '6.4', '6.3']
+    phpunit:
+        name: PHPUnit Tests (PHP ${{ matrix.php }}, WP ${{ matrix.wordpress }})
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: ['7.4', '8.0', '8.1', '8.2']
+                wordpress: ['latest', '6.4', '6.3']
 
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: wordpress_test
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ROOT_PASSWORD: root
+                    MYSQL_DATABASE: wordpress_test
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: mysqli
-          coverage: none
-          tools: composer, phpunit
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: mysqli
+                  coverage: none
+                  tools: composer, phpunit
 
-      - name: Install WordPress Test Suite
-        run: |
-          bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1:3306 ${{ matrix.wordpress }} true
+            - name: Install WordPress Test Suite
+              run: |
+                  bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1:3306 ${{ matrix.wordpress }} true
 
-      - name: Run PHPUnit tests
-        run: phpunit
+            - name: Run PHPUnit tests
+              run: phpunit
 
-  jest:
-    name: Jest Tests
-    runs-on: ubuntu-latest
+    jest:
+        name: Jest Tests
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+                  cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-      - name: Run Jest tests
-        run: npm run test:unit
+            - name: Run Jest tests
+              run: npm run test:unit
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage/coverage-final.json
-          flags: javascript
-          name: codecov-javascript
+            - name: Upload coverage to Codecov
+              uses: codecov/codecov-action@v3
+              with:
+                  files: ./coverage/coverage-final.json
+                  flags: javascript
+                  name: codecov-javascript
 
-  lint:
-    name: Lint (JS & CSS)
-    runs-on: ubuntu-latest
+    lint:
+        name: Lint (JS & CSS)
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+                  cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-      - name: Lint JavaScript
-        run: npm run lint:js
+            - name: Lint JavaScript
+              run: npm run lint:js
 
-      - name: Lint CSS
-        run: npm run lint:css
+            - name: Lint CSS
+              run: npm run lint:css

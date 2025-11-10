@@ -6,11 +6,11 @@
 	"category": "placeholders",
 	"icon": "format-image",
 	"description": "Mobile Banner ad placeholder - 320×50 pixels",
-	"keywords": ["ad", "placeholder", "mobile", "banner", "320x50"],
+	"keywords": [ "ad", "placeholder", "mobile", "banner", "320x50" ],
 	"textdomain": "placeholders",
 	"supports": {
 		"html": false,
-		"align": ["wide", "full"],
+		"align": [ "wide", "full" ],
 		"color": {
 			"background": true,
 			"text": true

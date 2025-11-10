@@ -2,6 +2,8 @@
  * Jest setup file
  */
 
+/* global jest */
+
 // Mock WordPress dependencies if needed
 global.wp = {
 	blocks: {
