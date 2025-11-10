@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "placeholders/medium-rectangle",
+	"title": "Medium Rectangle (300×250)",
+	"category": "placeholders",
+	"icon": "format-image",
+	"description": "Medium Rectangle ad placeholder - 300×250 pixels",
+	"keywords": ["ad", "placeholder", "medium", "rectangle", "300x250"],
+	"textdomain": "placeholders",
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"attributes": {
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f0f0f0"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#666666"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "placeholders/portrait",
+	"title": "Portrait (300×1050)",
+	"category": "placeholders",
+	"icon": "format-image",
+	"description": "Portrait ad placeholder - 300×1050 pixels",
+	"keywords": ["ad", "placeholder", "portrait", "300x1050"],
+	"textdomain": "placeholders",
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"attributes": {
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f0f0f0"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#666666"
+		}
+	}
+}

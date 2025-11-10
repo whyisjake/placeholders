@@ -1,0 +1,31 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node modules (if you add build process later)
+node_modules/
+package-lock.json
+
+# Build files
+/build/
+/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# WordPress
+wp-content/
+!wp-content/plugins/placeholders/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache

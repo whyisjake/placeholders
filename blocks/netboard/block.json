@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "placeholders/netboard",
+	"title": "Netboard (580×400)",
+	"category": "placeholders",
+	"icon": "format-image",
+	"description": "Netboard ad placeholder - 580×400 pixels",
+	"keywords": ["ad", "placeholder", "netboard", "580x400"],
+	"textdomain": "placeholders",
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"attributes": {
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f0f0f0"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#666666"
+		}
+	}
+}
