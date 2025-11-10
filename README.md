@@ -70,16 +70,30 @@ placeholders/
 ├── .github/
 │   └── workflows/
 │       ├── deploy-to-wordpress-org.yml
-│       └── asset-update.yml
+│       ├── asset-update.yml
+│       └── test.yml
 ├── .wordpress-org/
+├── bin/
+│   └── install-wp-tests.sh
 ├── blocks/
 │   ├── leaderboard/
 │   │   └── block.json
 │   └── [other ad sizes]
+├── tests/
+│   ├── jest/
+│   │   ├── blocks.test.js
+│   │   └── setup.js
+│   └── phpunit/
+│       ├── bootstrap.php
+│       ├── test-plugin.php
+│       └── test-blocks.php
 ├── blocks.js
 ├── editor.css
 ├── style.css
 ├── placeholders.php
+├── package.json
+├── jest.config.js
+├── phpunit.xml.dist
 ├── readme.txt
 └── README.md
 ```
@@ -90,9 +104,70 @@ placeholders/
 # Clone the repository
 git clone https://github.com/whyisjake/placeholders.git
 
+# Install dependencies
+npm install
+
 # Symlink to your local WordPress installation
 ln -s /path/to/placeholders /path/to/wordpress/wp-content/plugins/placeholders
 ```
+
+### Testing
+
+The plugin includes both PHPUnit tests for PHP code and Jest tests for JavaScript.
+
+#### JavaScript Tests (Jest)
+
+```bash
+# Run Jest tests
+npm run test:unit
+
+# Run tests in watch mode
+npm run test:unit:watch
+
+# Run tests with coverage
+npm run test:unit:coverage
+```
+
+#### PHP Tests (PHPUnit)
+
+First, install the WordPress test suite:
+
+```bash
+# Install WordPress test suite
+bin/install-wp-tests.sh wordpress_test root '' localhost latest
+
+# Run PHPUnit tests
+phpunit
+
+# Run specific test file
+phpunit tests/phpunit/test-blocks.php
+```
+
+#### Linting
+
+```bash
+# Lint JavaScript
+npm run lint:js
+
+# Lint CSS
+npm run lint:css
+
+# Lint everything
+npm run lint
+
+# Auto-fix formatting
+npm run format
+```
+
+#### Continuous Integration
+
+The plugin uses GitHub Actions for automated testing. Tests run automatically on:
+- Every push to the `main` branch
+- Every pull request
+
+The CI pipeline tests against:
+- PHP versions: 7.4, 8.0, 8.1, 8.2
+- WordPress versions: latest, 6.4, 6.3
 
 ### Deployment to WordPress.org
 
