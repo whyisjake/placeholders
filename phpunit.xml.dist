@@ -9,8 +9,8 @@
 >
 	<testsuites>
 		<testsuite name="placeholders">
-			<file>./tests/phpunit/test-plugin.php</file>
-			<file>./tests/phpunit/test-blocks.php</file>
+			<file>./tests/phpunit/Test_Plugin.php</file>
+			<file>./tests/phpunit/Test_Blocks.php</file>
 		</testsuite>
 	</testsuites>
 	<coverage>
