@@ -12,6 +12,9 @@ Thumbs.db
 # Node modules
 node_modules/
 
+# Composer
+/vendor/
+
 # Build files
 /build/
 /dist/
