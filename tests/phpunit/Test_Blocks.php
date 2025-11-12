@@ -45,14 +45,9 @@ class Test_Blocks extends WP_UnitTestCase {
 	 * Test block rendering with default attributes
 	 */
 	public function test_block_render_default() {
-		$block = new WP_Block(
-			array(
-				'blockName' => 'placeholders/leaderboard',
-				'attrs'     => array(),
-			)
-		);
-
-		$output = placeholders_render_block( array(), '', $block );
+		$block_content = '<!-- wp:placeholders/leaderboard /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
 
 		$this->assertNotEmpty( $output );
 		$this->assertStringContainsString( 'placeholder-ad', $output );
@@ -65,24 +60,9 @@ class Test_Blocks extends WP_UnitTestCase {
 	 * Test block rendering with custom colors
 	 */
 	public function test_block_render_custom_colors() {
-		$block = new WP_Block(
-			array(
-				'blockName' => 'placeholders/medium-rectangle',
-				'attrs'     => array(
-					'backgroundColor' => '#ff0000',
-					'textColor'       => '#ffffff',
-				),
-			)
-		);
-
-		$output = placeholders_render_block(
-			array(
-				'backgroundColor' => '#ff0000',
-				'textColor'       => '#ffffff',
-			),
-			'',
-			$block
-		);
+		$block_content = '<!-- wp:placeholders/medium-rectangle {"backgroundColor":"#ff0000","textColor":"#ffffff"} /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
 
 		$this->assertStringContainsString( '#ff0000', $output );
 		$this->assertStringContainsString( '#ffffff', $output );
@@ -92,24 +72,9 @@ class Test_Blocks extends WP_UnitTestCase {
 	 * Test render callback escapes output
 	 */
 	public function test_block_render_escapes_output() {
-		$block = new WP_Block(
-			array(
-				'blockName' => 'placeholders/leaderboard',
-				'attrs'     => array(
-					'backgroundColor' => '<script>alert("xss")</script>',
-					'textColor'       => '"><script>alert("xss")</script>',
-				),
-			)
-		);
-
-		$output = placeholders_render_block(
-			array(
-				'backgroundColor' => '<script>alert("xss")</script>',
-				'textColor'       => '"><script>alert("xss")</script>',
-			),
-			'',
-			$block
-		);
+		$block_content = '<!-- wp:placeholders/leaderboard {"backgroundColor":"<script>alert(\\"xss\\")</script>","textColor":"\"><script>alert(\\"xss\\")</script>"} /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
 
 		$this->assertStringNotContainsString( '<script>', $output );
 		$this->assertStringNotContainsString( 'alert(', $output );
@@ -119,14 +84,9 @@ class Test_Blocks extends WP_UnitTestCase {
 	 * Test that invalid block name returns empty string
 	 */
 	public function test_invalid_block_name() {
-		$block = new WP_Block(
-			array(
-				'blockName' => 'placeholders/invalid-size',
-				'attrs'     => array(),
-			)
-		);
-
-		$output = placeholders_render_block( array(), '', $block );
+		$block_content = '<!-- wp:placeholders/invalid-size /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
 		$this->assertEmpty( $output );
 	}
 
