@@ -9,7 +9,8 @@
 >
 	<testsuites>
 		<testsuite name="placeholders">
-			<directory prefix="test-" suffix=".php">./tests/phpunit</directory>
+			<file>./tests/phpunit/test-plugin.php</file>
+			<file>./tests/phpunit/test-blocks.php</file>
 		</testsuite>
 	</testsuites>
 	<coverage>
