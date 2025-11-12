@@ -1,5 +1,6 @@
 # Placeholders
 
+[![Tests](https://github.com/whyisjake/placeholders/actions/workflows/test.yml/badge.svg)](https://github.com/whyisjake/placeholders/actions/workflows/test.yml)
 [![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/placeholders.svg)](https://wordpress.org/plugins/placeholders/)
 [![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/placeholders.svg)](https://wordpress.org/plugins/placeholders/)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -133,14 +134,20 @@ npm run test:unit:coverage
 First, install the WordPress test suite:
 
 ```bash
+# Install Composer dependencies
+composer install
+
 # Install WordPress test suite
 bin/install-wp-tests.sh wordpress_test root '' localhost latest
 
 # Run PHPUnit tests
-phpunit
+vendor/bin/phpunit
 
 # Run specific test file
-phpunit tests/phpunit/test-blocks.php
+vendor/bin/phpunit tests/phpunit/Test_Blocks.php
+
+# Run with verbose output
+vendor/bin/phpunit --verbose
 ```
 
 #### Linting
@@ -166,8 +173,9 @@ The plugin uses GitHub Actions for automated testing. Tests run automatically on
 - Every pull request
 
 The CI pipeline tests against:
-- PHP versions: 7.4, 8.0, 8.1, 8.2
-- WordPress versions: latest, 6.4, 6.3
+- PHP versions: 8.1, 8.2, 8.3
+- WordPress versions: latest, 6.7, 6.6
+- PHPUnit: 9.x (WordPress compatible)
 
 ### Deployment to WordPress.org
 
