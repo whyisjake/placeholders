@@ -73,30 +73,38 @@ placeholders/
 │       ├── deploy-to-wordpress-org.yml
 │       ├── asset-update.yml
 │       └── test.yml
-├── .wordpress-org/
+├── .wordpress-org/          # WordPress.org plugin assets
 ├── bin/
 │   └── install-wp-tests.sh
 ├── blocks/
 │   ├── leaderboard/
 │   │   └── block.json
-│   └── [other ad sizes]
+│   ├── medium-rectangle/
+│   │   └── block.json
+│   └── [12 other ad sizes]/
+│       └── block.json
 ├── tests/
 │   ├── jest/
 │   │   ├── blocks.test.js
 │   │   └── setup.js
 │   └── phpunit/
 │       ├── bootstrap.php
-│       ├── test-plugin.php
-│       └── test-blocks.php
-├── blocks.js
-├── editor.css
-├── style.css
-├── placeholders.php
-├── package.json
-├── jest.config.js
-├── phpunit.xml.dist
-├── readme.txt
-└── README.md
+│       ├── Test_Plugin.php
+│       └── Test_Blocks.php
+├── .gitignore
+├── blocks.js                # Client-side block registration
+├── composer.json            # PHP dependencies
+├── composer.lock
+├── editor.css              # Editor styles
+├── jest.config.js          # Jest configuration
+├── LICENSE.txt             # GPL v2 license
+├── package.json            # Node dependencies
+├── package-lock.json
+├── phpunit.xml.dist        # PHPUnit configuration
+├── placeholders.php        # Main plugin file
+├── readme.txt              # WordPress.org readme
+├── README.md               # GitHub readme
+└── style.css               # Frontend styles
 ```
 
 ### Local Development
