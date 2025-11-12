@@ -76,8 +76,12 @@ class Test_Blocks extends WP_UnitTestCase {
 		$parsed_blocks = parse_blocks( $block_content );
 		$output = render_block( $parsed_blocks[0] );
 
+		// Verify dangerous tags are escaped and not executable
 		$this->assertStringNotContainsString( '<script>', $output );
-		$this->assertStringNotContainsString( 'alert(', $output );
+		$this->assertStringContainsString( '&lt;script&gt;', $output );
+
+		// Verify quotes are escaped in attributes
+		$this->assertStringContainsString( '&quot;', $output );
 	}
 
 	/**
