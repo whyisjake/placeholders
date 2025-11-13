@@ -1,29 +1,50 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "placeholders/large-leaderboard",
-	"title": "Large Leaderboard (970×90)",
-	"category": "placeholders",
-	"icon": "format-image",
-	"description": "Large Leaderboard ad placeholder - 970×90 pixels",
-	"keywords": [ "ad", "placeholder", "large", "leaderboard", "970x90" ],
-	"textdomain": "placeholders",
-	"supports": {
-		"html": false,
-		"align": [ "wide", "full" ],
-		"color": {
-			"background": true,
-			"text": true
-		}
-	},
-	"attributes": {
-		"backgroundColor": {
-			"type": "string",
-			"default": "#f0f0f0"
-		},
-		"textColor": {
-			"type": "string",
-			"default": "#666666"
-		}
-	}
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "placeholders/large-leaderboard",
+  "title": "Large Leaderboard (970×90)",
+  "category": "placeholders",
+  "icon": "format-image",
+  "description": "Large Leaderboard ad placeholder - 970×90 pixels",
+  "keywords": [
+    "ad",
+    "placeholder",
+    "large",
+    "leaderboard",
+    "970x90"
+  ],
+  "textdomain": "placeholders",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "backgroundColor": {
+      "type": "string",
+      "default": "#f0f0f0"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#666666"
+    },
+    "responsive": {
+      "type": "boolean",
+      "default": false
+    },
+    "mobileSize": {
+      "type": "string",
+      "default": ""
+    },
+    "tabletSize": {
+      "type": "string",
+      "default": ""
+    }
+  }
 }

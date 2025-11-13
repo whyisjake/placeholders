@@ -5,7 +5,9 @@
 
 ( function () {
 	const { registerBlockType } = wp.blocks;
-	const { useBlockProps } = wp.blockEditor;
+	const { useBlockProps, InspectorControls } = wp.blockEditor;
+	const { PanelBody, ToggleControl, SelectControl } = wp.components;
+	const { Fragment } = wp.element;
 	const el = wp.element.createElement;
 
 	// Define all ad sizes
@@ -50,24 +52,89 @@
 		netboard: { width: 580, height: 400, label: 'Netboard' },
 	};
 
+	// Create size options for selects
+	const sizeOptions = [
+		{ label: 'None (use desktop size)', value: '' },
+	].concat(
+		Object.keys( adSizes ).map( function ( slug ) {
+			return {
+				label:
+					adSizes[ slug ].label +
+					' (' +
+					adSizes[ slug ].width +
+					'×' +
+					adSizes[ slug ].height +
+					')',
+				value: slug,
+			};
+		} )
+	);
+
 	// Register each block
 	Object.keys( adSizes ).forEach( function ( slug ) {
 		const size = adSizes[ slug ];
 
 		registerBlockType( 'placeholders/' + slug, {
 			edit: ( props ) => {
+				const { attributes, setAttributes } = props;
+				const {
+					responsive,
+					mobileSize,
+					tabletSize,
+					backgroundColor,
+					textColor,
+				} = attributes;
+
 				// eslint-disable-next-line react-hooks/rules-of-hooks
 				const blockProps = useBlockProps( {
 					style: {
 						width: size.width + 'px',
 						height: size.height + 'px',
-						backgroundColor:
-							props.attributes.backgroundColor || '#f0f0f0',
-						color: props.attributes.textColor || '#666666',
+						backgroundColor: backgroundColor || '#f0f0f0',
+						color: textColor || '#666666',
 					},
 				} );
 
-				return el(
+				// Inspector controls for responsive settings
+				const inspectorControls = el(
+					InspectorControls,
+					{},
+					el(
+						PanelBody,
+						{
+							title: 'Responsive Size Mapping',
+							initialOpen: true,
+						},
+						el( ToggleControl, {
+							label: 'Enable Responsive Mode',
+							help: 'Show different ad sizes for different screen sizes (like Google Ad Manager size mapping)',
+							checked: responsive,
+							onChange: ( value ) =>
+								setAttributes( { responsive: value } ),
+						} ),
+						responsive &&
+							el( SelectControl, {
+								label: 'Tablet Size (768px - 1024px)',
+								value: tabletSize,
+								options: sizeOptions,
+								onChange: ( value ) =>
+									setAttributes( { tabletSize: value } ),
+								help: 'Ad size to display on tablet devices',
+							} ),
+						responsive &&
+							el( SelectControl, {
+								label: 'Mobile Size (< 768px)',
+								value: mobileSize,
+								options: sizeOptions,
+								onChange: ( value ) =>
+									setAttributes( { mobileSize: value } ),
+								help: 'Ad size to display on mobile devices',
+							} )
+					)
+				);
+
+				// Editor preview
+				const adPreview = el(
 					'div',
 					blockProps,
 					el(
@@ -76,7 +143,7 @@
 						el(
 							'span',
 							{ className: 'placeholder-ad-label' },
-							size.label
+							size.label + ( responsive ? ' (Desktop)' : '' )
 						),
 						el(
 							'span',
@@ -85,6 +152,8 @@
 						)
 					)
 				);
+
+				return el( Fragment, {}, inspectorControls, adPreview );
 			},
 			save() {
 				return null; // Server-side rendering

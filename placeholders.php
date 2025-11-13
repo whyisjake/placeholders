@@ -138,6 +138,36 @@ function placeholders_register_blocks() {
 add_action( 'init', 'placeholders_register_blocks' );
 
 /**
+ * Render a single ad placeholder.
+ *
+ * @param array  $size         Ad size data.
+ * @param string $size_slug    Ad size slug.
+ * @param string $bg_color     Background color.
+ * @param string $text_color   Text color.
+ * @param string $breakpoint   Breakpoint class (desktop, tablet, mobile).
+ * @return string Rendered ad placeholder HTML.
+ */
+function placeholders_render_single_ad( $size, $size_slug, $bg_color, $text_color, $breakpoint = 'desktop' ) {
+	$classes = sprintf(
+		'placeholder-ad placeholder-ad-%s placeholder-ad-size-%s',
+		esc_attr( $size_slug ),
+		esc_attr( $breakpoint )
+	);
+
+	return sprintf(
+		'<div class="%s" style="width: %dpx; height: %dpx; background-color: %s; color: %s;"><div class="placeholder-ad-content"><span class="placeholder-ad-label">%s</span><span class="placeholder-ad-dimensions">%d × %d</span></div></div>',
+		$classes,
+		$size['width'],
+		$size['height'],
+		$bg_color,
+		$text_color,
+		esc_html( $size['label'] ),
+		$size['width'],
+		$size['height']
+	);
+}
+
+/**
  * Render callback for placeholder blocks.
  *
  * @param array  $attributes Block attributes.
@@ -153,30 +183,62 @@ function placeholders_render_block( $attributes, $content, $block ) {
 		return '';
 	}
 
-	$size = $ad_sizes[ $block_name ];
-	$bg_color = isset( $attributes['backgroundColor'] ) ? esc_attr( $attributes['backgroundColor'] ) : '#f0f0f0';
+	$size       = $ad_sizes[ $block_name ];
+	$bg_color   = isset( $attributes['backgroundColor'] ) ? esc_attr( $attributes['backgroundColor'] ) : '#f0f0f0';
 	$text_color = isset( $attributes['textColor'] ) ? esc_attr( $attributes['textColor'] ) : '#666666';
+	$responsive = isset( $attributes['responsive'] ) ? $attributes['responsive'] : false;
+
+	// Non-responsive mode: render single ad
+	if ( ! $responsive ) {
+		$wrapper_attributes = get_block_wrapper_attributes(
+			array(
+				'class' => 'placeholder-ad placeholder-ad-' . esc_attr( $block_name ),
+				'style' => sprintf(
+					'width: %dpx; height: %dpx; background-color: %s; color: %s;',
+					$size['width'],
+					$size['height'],
+					$bg_color,
+					$text_color
+				),
+			)
+		);
+
+		return sprintf(
+			'<div %s><div class="placeholder-ad-content"><span class="placeholder-ad-label">%s</span><span class="placeholder-ad-dimensions">%d × %d</span></div></div>',
+			$wrapper_attributes,
+			esc_html( $size['label'] ),
+			$size['width'],
+			$size['height']
+		);
+	}
+
+	// Responsive mode: render multiple ad sizes for different breakpoints
+	// Render in order: mobile, tablet, desktop (for CSS sibling selectors)
+	$mobile_size = isset( $attributes['mobileSize'] ) ? $attributes['mobileSize'] : '';
+	$tablet_size = isset( $attributes['tabletSize'] ) ? $attributes['tabletSize'] : '';
+
+	$output = '';
+
+	// Mobile size (optional - rendered first)
+	if ( ! empty( $mobile_size ) && isset( $ad_sizes[ $mobile_size ] ) ) {
+		$output .= placeholders_render_single_ad( $ad_sizes[ $mobile_size ], $mobile_size, $bg_color, $text_color, 'mobile' );
+	}
+
+	// Tablet size (optional - rendered second)
+	if ( ! empty( $tablet_size ) && isset( $ad_sizes[ $tablet_size ] ) ) {
+		$output .= placeholders_render_single_ad( $ad_sizes[ $tablet_size ], $tablet_size, $bg_color, $text_color, 'tablet' );
+	}
+
+	// Desktop size (always rendered last as fallback)
+	$output .= placeholders_render_single_ad( $size, $block_name, $bg_color, $text_color, 'desktop' );
 
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'placeholder-ad placeholder-ad-' . esc_attr( $block_name ),
-			'style' => sprintf(
-				'width: %dpx; height: %dpx; background-color: %s; color: %s;',
-				$size['width'],
-				$size['height'],
-				$bg_color,
-				$text_color
-			),
+			'class' => 'placeholder-ad-responsive-container',
 		)
 	);
 
-	return sprintf(
-		'<div %s><div class="placeholder-ad-content"><span class="placeholder-ad-label">%s</span><span class="placeholder-ad-dimensions">%d × %d</span></div></div>',
-		$wrapper_attributes,
-		esc_html( $size['label'] ),
-		$size['width'],
-		$size['height']
-	);
+	return sprintf( '<div %s>%s</div>', $wrapper_attributes, $output );
 }
 
 /**

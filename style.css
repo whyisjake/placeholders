@@ -72,3 +72,60 @@
 .placeholder-ad-mobile-banner .placeholder-ad-dimensions {
 	font-size: 10px;
 }
+
+/* Responsive Size Mapping (Google Ad Manager style) */
+.placeholder-ad-responsive-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px auto;
+}
+
+.placeholder-ad-responsive-container .placeholder-ad {
+	display: none; /* Hide all by default */
+}
+
+/* Desktop (> 1024px) - Always show desktop size on large screens */
+@media (min-width: 1025px) {
+
+	.placeholder-ad-responsive-container .placeholder-ad-size-desktop {
+		display: flex;
+	}
+}
+
+/* Tablet (768px - 1024px) - Show tablet size, or desktop as fallback */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+	.placeholder-ad-responsive-container .placeholder-ad-size-tablet {
+		display: flex;
+	}
+
+	/* Show desktop size if no tablet size is provided */
+	.placeholder-ad-responsive-container .placeholder-ad-size-desktop {
+		display: flex;
+	}
+
+	/* Hide desktop if tablet exists (higher specificity via extra class) */
+	.placeholder-ad-responsive-container .placeholder-ad-size-tablet ~ .placeholder-ad-size-desktop {
+		display: none;
+	}
+}
+
+/* Mobile (< 768px) - Show mobile size, or desktop as fallback */
+@media (max-width: 767px) {
+
+	.placeholder-ad-responsive-container .placeholder-ad-size-mobile {
+		display: flex;
+	}
+
+	/* Show desktop size if no mobile size is provided */
+	.placeholder-ad-responsive-container .placeholder-ad-size-desktop {
+		display: flex;
+	}
+
+	/* Hide desktop if mobile exists */
+	.placeholder-ad-responsive-container .placeholder-ad-size-mobile ~ .placeholder-ad-size-desktop,
+	.placeholder-ad-responsive-container .placeholder-ad-size-mobile ~ .placeholder-ad-size-tablet {
+		display: none;
+	}
+}

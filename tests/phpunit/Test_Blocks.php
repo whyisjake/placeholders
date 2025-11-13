@@ -95,6 +95,66 @@ class Test_Blocks extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test responsive mode renders multiple ad sizes
+	 */
+	public function test_responsive_mode_renders_multiple_sizes() {
+		$block_content = '<!-- wp:placeholders/leaderboard {"responsive":true,"mobileSize":"mobile-banner","tabletSize":"medium-rectangle"} /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
+
+		// Should contain responsive container
+		$this->assertStringContainsString( 'placeholder-ad-responsive-container', $output );
+
+		// Should contain all three sizes
+		$this->assertStringContainsString( 'placeholder-ad-size-mobile', $output );
+		$this->assertStringContainsString( 'placeholder-ad-size-tablet', $output );
+		$this->assertStringContainsString( 'placeholder-ad-size-desktop', $output );
+
+		// Should contain mobile dimensions (320x50)
+		$this->assertStringContainsString( '320', $output );
+		$this->assertStringContainsString( '50', $output );
+
+		// Should contain tablet dimensions (300x250)
+		$this->assertStringContainsString( '300', $output );
+		$this->assertStringContainsString( '250', $output );
+
+		// Should contain desktop dimensions (728x90)
+		$this->assertStringContainsString( '728', $output );
+		$this->assertStringContainsString( '90', $output );
+	}
+
+	/**
+	 * Test responsive mode with only mobile size
+	 */
+	public function test_responsive_mode_mobile_only() {
+		$block_content = '<!-- wp:placeholders/leaderboard {"responsive":true,"mobileSize":"mobile-banner"} /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
+
+		// Should contain responsive container
+		$this->assertStringContainsString( 'placeholder-ad-responsive-container', $output );
+
+		// Should contain mobile and desktop, but not tablet
+		$this->assertStringContainsString( 'placeholder-ad-size-mobile', $output );
+		$this->assertStringContainsString( 'placeholder-ad-size-desktop', $output );
+		$this->assertStringNotContainsString( 'placeholder-ad-size-tablet', $output );
+	}
+
+	/**
+	 * Test responsive mode handles invalid size gracefully
+	 */
+	public function test_responsive_mode_invalid_size() {
+		$block_content = '<!-- wp:placeholders/leaderboard {"responsive":true,"mobileSize":"invalid-size"} /-->';
+		$parsed_blocks = parse_blocks( $block_content );
+		$output = render_block( $parsed_blocks[0] );
+
+		// Should still render desktop size
+		$this->assertStringContainsString( 'placeholder-ad-size-desktop', $output );
+		// Should not crash or error
+		$this->assertNotEmpty( $output );
+	}
+
+	/**
 	 * Test custom block category is registered
 	 */
 	public function test_custom_category_registered() {
