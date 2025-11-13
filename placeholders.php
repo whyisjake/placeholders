@@ -232,11 +232,17 @@ function placeholders_render_block( $attributes, $content, $block ) {
 	// Desktop size (always rendered last as fallback)
 	$output .= placeholders_render_single_ad( $size, $block_name, $bg_color, $text_color, 'desktop' );
 
+	// Get wrapper attributes but remove color classes (colors are applied inline to individual ads)
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
 			'class' => 'placeholder-ad-responsive-container',
 		)
 	);
+
+	// Strip color-related classes from the container wrapper
+	$wrapper_attributes = preg_replace( '/\s*has-[a-z-]*-color/', '', $wrapper_attributes );
+	$wrapper_attributes = preg_replace( '/\s*has-background/', '', $wrapper_attributes );
+	$wrapper_attributes = preg_replace( '/\s*has-text-color/', '', $wrapper_attributes );
 
 	return sprintf( '<div %s>%s</div>', $wrapper_attributes, $output );
 }
