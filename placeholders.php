@@ -5,7 +5,7 @@
  * Description: Gutenberg blocks for common ad placeholder sizes
  * Version: 1.0.0
  * Author: Jake Spurlock
- * Author URI: https://whyisjake.com
+ * Author URI: https://jakespurlock.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: placeholders

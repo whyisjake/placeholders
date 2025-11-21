@@ -1,0 +1,29 @@
+# Directories
+.git
+.github
+.wordpress-org
+.claude
+node_modules
+vendor
+coverage
+bin
+tests
+
+# Files
+.DS_Store
+.gitignore
+.gitattributes
+.distignore
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpunit.xml.dist
+jest.config.js
+README.md
+
+# Build/development files
+*.map
+*.log
+.env
+.env.*
